@@ -1,0 +1,54 @@
+syntax = "proto3";
+package confer;
+
+service Confer {
+    rpc GetConfigs(GetConfigsRequest) returns (GetConfigsReply);
+    rpc UploadConfig(UploadConfigRequest) returns (UploadConfigReply);
+    rpc CreateAuthKey(CreateAuthKeyRequest) returns (CreateAuthKeyReply);
+    rpc AuthorizeKeyForConfigs(AuthorizeKeyForConfigsRequest) returns (AuthorizeKeyForConfigsReply);
+}
+
+message EncryptedConfig {
+    string config = 1;
+    bool encrypted = 2;
+}
+
+message GetConfigsReply {
+    map<string, EncryptedConfig> configs = 1;
+}
+
+message GetConfigsRequest {
+    repeated string config_names = 1;
+    string auth_key_id = 2;
+    uint64 time = 3;
+    string hmac = 4;
+}
+
+message UploadConfigRequest {
+    string config_name = 1;
+    string config = 2;
+    bool encrypted = 3;
+    uint64 time = 4;
+    string hmac = 5;
+}
+
+message UploadConfigReply {}
+
+message CreateAuthKeyRequest {
+    uint64 time = 1;
+    string hmac = 2;
+}
+
+message CreateAuthKeyReply {
+    string auth_key = 1;
+}
+
+message AuthorizeKeyForConfigsRequest {
+    repeated string config_names = 1;
+    string auth_key_id = 2;
+    uint64 time = 3;
+    string hmac = 4;
+}
+
+message AuthorizeKeyForConfigsReply {
+}

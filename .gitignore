@@ -1,0 +1,4 @@
+confer/target/
+confer-server/target/
+.DS_Store
+*.code-workspace
